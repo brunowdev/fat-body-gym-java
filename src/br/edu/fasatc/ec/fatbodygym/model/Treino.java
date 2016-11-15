@@ -1,0 +1,63 @@
+package br.edu.fasatc.ec.fatbodygym.model;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
+import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
+
+@LocalFileAsTable(tableName = ErpDatabaseConstants.TABLE_TREINOS)
+public class Treino extends AbstractEntidadeEntity {
+
+	private static final long serialVersionUID = 8594356440602648459L;
+
+	private Long id;
+	private Aluno aluno;
+	private List<Exercicio> exercicios;
+	private Date data;
+	private TipoTreino tipoTreino;
+
+	@Override
+	public Long getId() {
+		return id;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public List<Exercicio> getExercicios() {
+		return Optional.of(exercicios).orElse(Collections.emptyList());
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public TipoTreino getTipoTreino() {
+		return tipoTreino;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public void setExercicios(List<Exercicio> exercicios) {
+		this.exercicios = exercicios;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public void setTipoTreino(TipoTreino tipoTreino) {
+		this.tipoTreino = tipoTreino;
+	}
+
+}

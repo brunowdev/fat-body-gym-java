@@ -1,0 +1,23 @@
+package br.edu.fasatc.ec.fatbodygym.model;
+
+import java.math.BigDecimal;
+
+import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
+import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
+
+@LocalFileAsTable(tableName = ErpDatabaseConstants.TABLE_ALUNOS)
+public final class Aluno extends Pessoa {
+
+	private static final long serialVersionUID = 7793253166397502975L;
+
+	private BigDecimal peso;
+
+	public BigDecimal getPeso() {
+		return peso;
+	}
+
+	public void setPeso(BigDecimal peso) {
+		this.peso = peso;
+	}
+
+}
