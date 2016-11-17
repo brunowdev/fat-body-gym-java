@@ -8,4 +8,10 @@ public abstract class AbstractEntidadeEntity implements Serializable {
 
 	public abstract Long getId();
 
+	@Override
+	public abstract int hashCode();
+
+	@Override
+	public abstract boolean equals(Object obj);
+
 }

@@ -6,7 +6,7 @@ import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 
 @LocalFileAsTable(tableName = ErpDatabaseConstants.TABLE_ALUNOS)
-public final class Aluno extends Pessoa {
+public final class Aluno extends Pessoa implements ISearchableString {
 
 	private static final long serialVersionUID = 7793253166397502975L;
 
@@ -18,6 +18,11 @@ public final class Aluno extends Pessoa {
 
 	public void setPeso(BigDecimal peso) {
 		this.peso = peso;
+	}
+
+	@Override
+	public String[] getSearchableFields() {
+		return new String[] { getNome(), getCpf(), getRg() };
 	}
 
 }
