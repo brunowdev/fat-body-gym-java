@@ -8,4 +8,8 @@ public class EntidadeNaoEncontradaException extends Exception {
 		super(message, e);
 	}
 
+	public EntidadeNaoEncontradaException(String message) {
+		super(message);
+	}
+
 }

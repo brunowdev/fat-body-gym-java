@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 import br.edu.fasatc.ec.fatbodygym.constansts.utils.ReadWriteLocalFile;
+import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
 
@@ -15,7 +16,7 @@ public abstract class BaseReposity<T extends AbstractEntidadeEntity, PK> extends
 	 */
 	private final String tabela = type.getDeclaredAnnotation(LocalFileAsTable.class).tableName();
 
-	public T merge(T entity) throws WriteFileException {
+	public T merge(T entity) throws WriteFileException, ReadFileException {
 
 		final ReadWriteLocalFile<T> writeFile = new ReadWriteLocalFile<>(tabela);
 
