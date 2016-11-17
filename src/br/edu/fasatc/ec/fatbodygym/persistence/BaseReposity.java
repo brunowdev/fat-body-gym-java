@@ -8,8 +8,9 @@ import br.edu.fasatc.ec.fatbodygym.exceptions.EntidadeNaoEncontradaException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
+import br.edu.fasatc.ec.fatbodygym.model.ISearchableString;
 
-public abstract class BaseReposity<T extends AbstractEntidadeEntity, PK> extends InnerClassHandler<T> {
+public abstract class BaseReposity<T extends AbstractEntidadeEntity & ISearchableString, PK> extends InnerClassHandler<T> {
 
 	/**
 	 * Captura a tabela de acordo com a anotação na classe.
@@ -26,6 +27,10 @@ public abstract class BaseReposity<T extends AbstractEntidadeEntity, PK> extends
 
 	public T findById(T entity) throws ReadFileException, EntidadeNaoEncontradaException {
 		return readWriteLocalFile().findOne(entity);
+	}
+
+	public T findByStringFields(String query) throws ReadFileException {
+		return readWriteLocalFile().findByStringFields(query);
 	}
 
 	public List<T> findAll() throws WriteFileException, ReadFileException {

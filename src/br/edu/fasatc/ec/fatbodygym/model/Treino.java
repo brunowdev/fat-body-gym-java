@@ -9,7 +9,7 @@ import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 
 @LocalFileAsTable(tableName = ErpDatabaseConstants.TABLE_TREINOS)
-public class Treino extends AbstractEntidadeEntity {
+public class Treino extends AbstractEntidadeEntity implements ISearchableString {
 
 	private static final long serialVersionUID = 8594356440602648459L;
 
@@ -88,6 +88,15 @@ public class Treino extends AbstractEntidadeEntity {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String[] getSearchableFields() {
+
+		final String aluno = Optional.ofNullable(getAluno().getNome()).orElse(null).toString();
+		final String tipoTreino = Optional.ofNullable(getTipoTreino()).orElse(null).toString();
+
+		return new String[] { aluno, tipoTreino };
 	}
 
 }

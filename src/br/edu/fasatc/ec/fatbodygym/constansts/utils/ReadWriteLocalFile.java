@@ -15,8 +15,9 @@ import br.edu.fasatc.ec.fatbodygym.exceptions.EntidadeNaoEncontradaException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
+import br.edu.fasatc.ec.fatbodygym.model.ISearchableString;
 
-public class ReadWriteLocalFile<T extends AbstractEntidadeEntity> {
+public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & ISearchableString> {
 
 	private final String tabela;
 
@@ -149,6 +150,36 @@ public class ReadWriteLocalFile<T extends AbstractEntidadeEntity> {
 		}
 
 		return persisted.get(persisted.indexOf(entity));
+	}
+
+	/**
+	 * Busca uma entidade pelos campos de String
+	 *
+	 * @param entity
+	 * @return
+	 * @throws EntidadeNaoEncontradaException
+	 * @throws ReadFileException
+	 */
+	public T findByStringFields(String query) throws ReadFileException {
+
+		if (query == null) {
+			throw new IllegalStateException("A query para busca não pode ser vazia.");
+		}
+
+		final List<T> persisted = readPersistedEntities();
+
+		T entityMatch = null;
+
+		for (final T t : persisted) {
+
+			if (t.strictMatch(query) || t.containsMatch(query)) {
+				entityMatch = t;
+				break;
+			}
+
+		}
+
+		return entityMatch;
 	}
 
 	/**

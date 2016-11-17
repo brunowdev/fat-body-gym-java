@@ -9,7 +9,7 @@ import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 
 @LocalFileAsTable(tableName = ErpDatabaseConstants.TABLE_USUARIOS)
-public class Usuario extends AbstractEntidadeEntity {
+public class Usuario extends AbstractEntidadeEntity implements ISearchableString {
 
 	private static final long serialVersionUID = -429947733530672916L;
 
@@ -22,6 +22,10 @@ public class Usuario extends AbstractEntidadeEntity {
 
 	@Length(min = 4, max = 20, message = "A senha deve possuir entre 4 e 20 caracteres.")
 	private String senha;
+
+	private Aluno aluno;
+
+	private Instrutor instrutor;
 
 	@Override
 	public Long getId() {
@@ -36,6 +40,22 @@ public class Usuario extends AbstractEntidadeEntity {
 		return senha;
 	}
 
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public Instrutor getInstrutor() {
+		return instrutor;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public void setInstrutor(Instrutor instrutor) {
+		this.instrutor = instrutor;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -46,6 +66,11 @@ public class Usuario extends AbstractEntidadeEntity {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public void hidePersonalFields() {
+		this.id = Long.MAX_VALUE;
+		this.senha = "*******";
 	}
 
 	@Override
@@ -76,6 +101,11 @@ public class Usuario extends AbstractEntidadeEntity {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String[] getSearchableFields() {
+		return new String[] { getEmail() };
 	}
 
 }

@@ -22,7 +22,7 @@ public final class Aluno extends Pessoa implements ISearchableString {
 
 	@Override
 	public String[] getSearchableFields() {
-		return new String[] { getNome(), getCpf(), getRg() };
+		return new String[] { getCpf(), getNome(), getRg() };
 	}
 
 }
