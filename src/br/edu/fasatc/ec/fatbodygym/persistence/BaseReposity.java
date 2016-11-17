@@ -1,10 +1,10 @@
 package br.edu.fasatc.ec.fatbodygym.persistence;
 
 import java.util.List;
-import java.util.Optional;
 
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 import br.edu.fasatc.ec.fatbodygym.constansts.utils.ReadWriteLocalFile;
+import br.edu.fasatc.ec.fatbodygym.exceptions.EntidadeNaoEncontradaException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
@@ -17,25 +17,23 @@ public abstract class BaseReposity<T extends AbstractEntidadeEntity, PK> extends
 	private final String tabela = type.getDeclaredAnnotation(LocalFileAsTable.class).tableName();
 
 	public T merge(T entity) throws WriteFileException, ReadFileException {
-
-		final ReadWriteLocalFile<T> writeFile = new ReadWriteLocalFile<>(tabela);
-
-		writeFile.merge(entity);
-
-		return entity;
+		return readWriteLocalFile().merge(entity);
 	}
 
-	public Optional<T> remove() {
-
-		return null;
+	public void remove(T entity) throws WriteFileException, ReadFileException {
+		readWriteLocalFile().remove(entity);
 	}
 
-	public Optional<T> findById(PK id) {
-		return null;
+	public T findById(T entity) throws ReadFileException, EntidadeNaoEncontradaException {
+		return readWriteLocalFile().findOne(entity);
 	}
 
-	public Optional<List<T>> findAll() {
-		return null;
+	public List<T> findAll() throws WriteFileException, ReadFileException {
+		return readWriteLocalFile().findAll();
+	}
+
+	private ReadWriteLocalFile<T> readWriteLocalFile() {
+		return new ReadWriteLocalFile<>(tabela);
 	}
 
 }
