@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public enum TipoExercicio implements EnumDescription, EnumInteger, Serializable {
 
-	ZUMBA(1, "Zumba"), SPINNING(2, "Spinning"), CROSSFIT(3, "Crossfit"), KETTLEBELLS(4, "Keetlebells"), BOOTCAMP(5, "Bootcamp"), YOGA(6, "Yoga"), MUAY_THAY(7, "Muay Thai");
+	ZUMBA(1, "Zumba"), SPINNING(2, "Spinning"), CROSSFIT(3, "Crossfit"), KETTLEBELLS(4, "Keetlebells"), BOOTCAMP(5, "Bootcamp"), YOGA(6, "Yoga"), MUAY_THAY(7,
+			"Muay Thai"), HIPERTROFIA_MUSCULAR(8, "Hipertrofia muscular");
 
 	private TipoExercicio(Integer integer, String description) {
 		this.integer = integer;
