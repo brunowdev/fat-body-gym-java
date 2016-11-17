@@ -5,8 +5,8 @@ Repositório do projeto final da disciplina de Programação Orientada à Objeto
 ## Atividades ##
 
 - [x] Criar classes de modelo
-- [ ] Criar mecanismo do CRUD com os arquivos
+- [x] Criar mecanismo do CRUD com os arquivos
 - [ ] Criar os repository's
-- [ ] Implementr as buscas
+- [ ] Implementar as buscas
 - [ ] Implementar os relatórios 
 - [ ] Criar o front 
