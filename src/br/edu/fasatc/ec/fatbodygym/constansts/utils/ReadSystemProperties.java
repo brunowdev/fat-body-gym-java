@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
-import javax.resource.spi.IllegalStateException;
 
 public class ReadSystemProperties {
 

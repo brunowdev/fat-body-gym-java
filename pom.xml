@@ -4,7 +4,6 @@
 	<groupId>fat-body-gym</groupId>
 	<artifactId>fat-body-gym</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<description>Projeto final da disciplina de Programação Orientada à Objetos I</description>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
