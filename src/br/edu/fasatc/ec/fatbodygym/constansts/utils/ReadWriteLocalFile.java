@@ -155,9 +155,8 @@ public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & ISearchableSt
     /**
      * Busca uma entidade pelos campos de String
      *
-     * @param entity
+     * @param query
      * @return
-     * @throws EntidadeNaoEncontradaException
      * @throws ReadFileException
      */
     public T findByStringFields(String query) throws ReadFileException {
@@ -196,13 +195,14 @@ public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & ISearchableSt
     /**
      * Retorna a próxima sequência de id para uma entidade
      *
+     * @param entities
      * @return
      */
-    public synchronized Long getSequence(List<T> entities) {
+    public Long getSequence(List<T> entities) {
 
         T entidadeLocalizada = null;
 
-        if (entities == null || entities.size() == 0) {
+        if (entities == null || entities.isEmpty()) {
             return 1L;
         }
 
@@ -216,6 +216,7 @@ public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & ISearchableSt
      * Método que define a sequência no objeto que será persistido
      *
      * @param entity
+     * @param entities
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      * @throws NoSuchFieldException
