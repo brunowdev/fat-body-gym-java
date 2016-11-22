@@ -4,10 +4,10 @@ import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
 
 public class WriteFileException extends PersistenceException {
 
-	private static final long serialVersionUID = -3712808954455220847L;
+    private static final long serialVersionUID = -3712808954455220847L;
 
-	public WriteFileException(Class<? extends AbstractEntidadeEntity> classe, Exception e) {
-		super("persistir", classe.getSimpleName(), e);
-	}
+    public WriteFileException(Class<? extends AbstractEntidadeEntity> classe, Exception e) {
+        super("persistir", classe.getSimpleName(), e);
+    }
 
 }

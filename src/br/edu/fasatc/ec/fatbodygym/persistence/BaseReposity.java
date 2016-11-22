@@ -3,14 +3,13 @@ package br.edu.fasatc.ec.fatbodygym.persistence;
 import java.util.List;
 
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
-import br.edu.fasatc.ec.fatbodygym.constansts.utils.ReadWriteLocalFile;
 import br.edu.fasatc.ec.fatbodygym.exceptions.EntidadeNaoEncontradaException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
-import br.edu.fasatc.ec.fatbodygym.model.ISearchableString;
+import br.edu.fasatc.ec.fatbodygym.model.SearchableString;
 
-public abstract class BaseReposity<T extends AbstractEntidadeEntity & ISearchableString, PK> extends InnerClassHandler<T> {
+public abstract class BaseReposity<T extends AbstractEntidadeEntity & SearchableString, PK> extends InnerClassHandler<T> {
 
 	/**
 	 * Captura a tabela de acordo com a anotação na classe.

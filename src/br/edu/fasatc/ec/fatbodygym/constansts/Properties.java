@@ -1,6 +1,6 @@
 package br.edu.fasatc.ec.fatbodygym.constansts;
 
-import br.edu.fasatc.ec.fatbodygym.constansts.utils.ReadSystemProperties;
+import br.edu.fasatc.ec.fatbodygym.utils.ReadSystemProperties;
 
 public class Properties {
 
@@ -13,7 +13,6 @@ public class Properties {
             try {
                 proprieades = ReadSystemProperties.create("database.properties");
             } catch (final IllegalStateException e) {
-                e.printStackTrace();
             }
 
         }

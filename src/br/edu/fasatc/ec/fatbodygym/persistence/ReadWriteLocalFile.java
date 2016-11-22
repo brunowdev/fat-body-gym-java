@@ -1,4 +1,4 @@
-package br.edu.fasatc.ec.fatbodygym.constansts.utils;
+package br.edu.fasatc.ec.fatbodygym.persistence;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -15,9 +15,9 @@ import br.edu.fasatc.ec.fatbodygym.exceptions.EntidadeNaoEncontradaException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
-import br.edu.fasatc.ec.fatbodygym.model.ISearchableString;
+import br.edu.fasatc.ec.fatbodygym.model.SearchableString;
 
-public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & ISearchableString> {
+public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & SearchableString> {
 
     private final String tabela;
 

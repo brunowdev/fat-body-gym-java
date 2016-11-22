@@ -1,4 +1,4 @@
-package br.edu.fasatc.ec.fatbodygym.constansts.utils;
+package br.edu.fasatc.ec.fatbodygym.utils;
 
 import java.io.File;
 import java.io.FileInputStream;

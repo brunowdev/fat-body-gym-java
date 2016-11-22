@@ -9,7 +9,7 @@ import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 
 @LocalFileAsTable(tableName = ErpDatabaseConstants.TABLE_TREINOS)
-public class Treino extends AbstractEntidadeEntity implements ISearchableString {
+public class Treino extends AbstractEntidadeEntity implements SearchableString {
 
 	private static final long serialVersionUID = 8594356440602648459L;
 

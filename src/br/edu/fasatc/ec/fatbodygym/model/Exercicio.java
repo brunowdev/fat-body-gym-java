@@ -6,7 +6,7 @@ import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 
 @LocalFileAsTable(tableName = ErpDatabaseConstants.TABLE_EXERCICIOS)
-public class Exercicio extends AbstractEntidadeEntity implements Serializable, ISearchableString {
+public class Exercicio extends AbstractEntidadeEntity implements Serializable, SearchableString {
 
 	private static final long serialVersionUID = 9093881942761085438L;
 
