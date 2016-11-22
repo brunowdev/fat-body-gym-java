@@ -9,4 +9,4 @@ Repositório do projeto final da disciplina de Programação Orientada à Objeto
 - [x] Criar os repository's
 - [x] Implementar as buscas
 - [ ] Implementar os relatórios 
-- [ ] Criar o front 
+- [ ] Criar os menus
