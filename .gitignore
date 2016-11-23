@@ -5,6 +5,7 @@ target/
 build/
 node_modules/
 nbproject/
+*.form
 .idea/
 *.class
 *.jar
