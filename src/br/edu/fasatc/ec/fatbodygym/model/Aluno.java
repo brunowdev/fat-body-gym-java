@@ -10,6 +10,13 @@ public final class Aluno extends Pessoa implements SearchableString {
 
 	private static final long serialVersionUID = 7793253166397502975L;
 
+	public Aluno(Long id) {
+		setId(id);
+	}
+
+	public Aluno() {
+	}
+
 	private BigDecimal peso;
 
 	public BigDecimal getPeso() {

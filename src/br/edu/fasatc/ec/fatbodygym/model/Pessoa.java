@@ -13,6 +13,10 @@ public abstract class Pessoa extends AbstractEntidadeEntity {
 	private Date dataNascimento;
 	private Boolean ativo;
 
+	public Pessoa() {
+		this.ativo = Boolean.TRUE;
+	}
+
 	@Override
 	public Long getId() {
 		return id;
@@ -56,6 +60,10 @@ public abstract class Pessoa extends AbstractEntidadeEntity {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Override

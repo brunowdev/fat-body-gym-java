@@ -19,6 +19,8 @@ import br.edu.fasatc.ec.fatbodygym.model.SearchableString;
 
 public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & SearchableString> {
 
+	private static final String CAMPO_ID = "id";
+
 	private final String tabela;
 
 	/**
@@ -228,7 +230,15 @@ public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & SearchableStr
 	 * @throws SecurityException
 	 */
 	public void setId(T entity, List<T> entities) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-		final Field field = entity.getClass().getDeclaredField("id");
+
+		Field field = null;
+
+		try {
+			field = entity.getClass().getDeclaredField(CAMPO_ID);
+		} catch (final NoSuchFieldException noSuchFieldException) {
+			field = entity.getClass().getSuperclass().getDeclaredField(CAMPO_ID);
+		}
+
 		field.setAccessible(true);
 		field.set(entity, getSequence(entities));
 	}
