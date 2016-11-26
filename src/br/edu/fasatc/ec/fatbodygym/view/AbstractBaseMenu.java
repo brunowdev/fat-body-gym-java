@@ -33,6 +33,10 @@ public abstract class AbstractBaseMenu {
 		return this.scanner.nextLine();
 	}
 
+	public Integer lerInteiro() {
+		return this.scanner.nextInt();
+	}
+
 	public Long lerLong() {
 		return this.scanner.nextLong();
 	}

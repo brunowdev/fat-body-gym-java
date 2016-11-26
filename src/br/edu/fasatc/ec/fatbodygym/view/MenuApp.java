@@ -10,8 +10,11 @@ import javax.swing.JOptionPane;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.Aluno;
+import br.edu.fasatc.ec.fatbodygym.model.Exercicio;
+import br.edu.fasatc.ec.fatbodygym.model.TipoExercicio;
 import br.edu.fasatc.ec.fatbodygym.model.Usuario;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.AlunoRepository;
+import br.edu.fasatc.ec.fatbodygym.persistence.repository.ExercicioRepository;
 import br.edu.fasatc.ec.fatbodygym.view.login.LoginGUI;
 
 public class MenuApp {
@@ -86,26 +89,44 @@ public class MenuApp {
 
 		int opcao = menu.selecionarOpcao();
 
-		final AlunoRepository repository = new AlunoRepository();
+		final AlunoRepository alunoRepository = new AlunoRepository();
+		final ExercicioRepository exercicioRepository = new ExercicioRepository();
 
 		while (opcao != 0) {
 
 			switch (opcao) {
-			case 5:
-				repository.merge(lerAluno(menu, null));
+
+			case 1:
+				alunoRepository.merge(lerAluno(menu, null));
 				break;
-			case 6:
+			case 2:
 				final Aluno aluno = localizarAlunoParaEditar(menu);
-				repository.merge(lerAluno(menu, aluno));
+				alunoRepository.merge(lerAluno(menu, aluno));
 				break;
-			case 7:
+			case 3:
 				localizarAlunoPorTexto(menu);
 				break;
-			case 8:
+			case 4:
 				localizarAlunoPorCodigo(menu);
 				break;
-			case 9:
+			case 5:
 				listarAlunos(menu);
+				break;
+			case 6:
+				exercicioRepository.merge(lerExercicio(menu, null));
+				break;
+			case 7:
+				final Exercicio exercicio = localizarExercicioParaEditar(menu);
+				exercicioRepository.merge(lerExercicio(menu, exercicio));
+				break;
+			case 8:
+				localizarExercicioPorTexto(menu);
+				break;
+			case 9:
+				localizarExercicioPorCodigo(menu);
+				break;
+			case 10:
+				listarExercicios(menu);
 				break;
 
 			case 0:
@@ -127,7 +148,7 @@ public class MenuApp {
 
 		final Aluno alunoParaSalvar = aluno == null ? new Aluno() : aluno;
 
-		System.out.println(aluno == null ? ("Cadastrando") : ("Alterando") + " aluno");
+		System.out.println((aluno == null ? ("Cadastrando") : ("Alterando")) + " aluno");
 		System.out.println("Nome: \n > ");
 		alunoParaSalvar.setNome(menu.lerTexto());
 		System.out.println("CPF: \n > ");
@@ -138,7 +159,7 @@ public class MenuApp {
 		alunoParaSalvar.setDataNascimento(menu.lerData(true));
 		System.out.println("Peso: (kg)\n > ");
 		alunoParaSalvar.setPeso(menu.lerBigdecimal());
-		System.out.println("Aluno " + aluno == null ? ("cadastrado") : ("alterado") + " com sucesso!");
+		System.out.println("Aluno " + (aluno == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
 
 		return alunoParaSalvar;
 	}
@@ -224,6 +245,115 @@ public class MenuApp {
 		System.out.println("RG: " + aluno.getRg());
 		System.out.println("Data nascimento: " + aluno.getDataNascimento());
 		System.out.println("Peso: " + aluno.getPeso());
+
+	}
+
+	/**
+	 * Método que cadastra um novo Exercício ou altera um já existente.
+	 *
+	 * @param menu
+	 * @param aluno
+	 * @return
+	 */
+	private static Exercicio lerExercicio(AbstractBaseMenu menu, Exercicio exercicio) {
+
+		final Exercicio exercicioParaSalvar = exercicio == null ? new Exercicio() : exercicio;
+
+		System.out.println(exercicio == null ? ("Cadastrando") : ("Alterando") + " exercício");
+		System.out.println("Nome: \n > ");
+		exercicioParaSalvar.setNome(menu.lerTexto());
+		System.out.println("Séries: \n > ");
+		exercicioParaSalvar.setSeries(menu.lerInteiro());
+		System.out.println("Quantidade série: \n > ");
+		exercicioParaSalvar.setQuantidadeSerie(menu.lerInteiro());
+		System.out.println("Tipo: \n > ");
+		exercicioParaSalvar.setTipoExercicio(TipoExercicio.fromInteger(menu.lerInteiro()));
+		System.out.println("Exercício " + exercicio == null ? ("cadastrado") : ("alterado") + " com sucesso!");
+
+		return exercicioParaSalvar;
+	}
+
+	private static Exercicio localizarExercicioParaEditar(AbstractBaseMenu menu) {
+		final ExercicioRepository exercicioRepository = new ExercicioRepository();
+
+		Exercicio exercicio = null;
+		while (exercicio == null) {
+
+			try {
+				System.out.println("Informe o código para alterar: ");
+				exercicio = exercicioRepository.findById(new Exercicio(menu.lerLong()));
+			} catch (final Exception e) {
+			}
+
+			if (exercicio == null) {
+				System.out.println("Exercício não encontrado!");
+			}
+		}
+
+		return exercicio;
+	}
+
+	private static void localizarExercicioPorTexto(AbstractBaseMenu menu) {
+		final ExercicioRepository exercicioRepository = new ExercicioRepository();
+
+		Exercicio exercicio = null;
+
+		while (exercicio == null) {
+
+			try {
+				System.out.println("Informe o nome para buscar: ");
+				final String texto = menu.lerTexto();
+				exercicio = exercicioRepository.findByStringFields(texto);
+				imprimirExercicio(exercicio);
+			} catch (final Exception e) {
+			}
+
+			if (exercicio == null) {
+				System.out.println("Exercício não encontrado!");
+			}
+		}
+
+	}
+
+	private static void localizarExercicioPorCodigo(AbstractBaseMenu menu) {
+		final ExercicioRepository exercicioRepository = new ExercicioRepository();
+
+		Exercicio exercicio = null;
+
+		while (exercicio == null) {
+
+			try {
+				System.out.println("Informe o código para buscar: ");
+				final Long id = menu.lerLong();
+				exercicio = exercicioRepository.findById(new Exercicio(id));
+				imprimirExercicio(exercicio);
+			} catch (final Exception e) {
+			}
+
+			if (exercicio == null) {
+				System.out.println("Exercício não encontrado!");
+			}
+		}
+
+	}
+
+	private static void listarExercicios(AbstractBaseMenu menu) throws ReadFileException, WriteFileException {
+		final ExercicioRepository exercicioRepository = new ExercicioRepository();
+
+		System.out.println("Listando exercícios: ");
+		List<Exercicio> exercicios = new ArrayList<>();
+		exercicios = exercicioRepository.findAll();
+		exercicios.stream().forEach(exercicio -> imprimirExercicio(exercicio));
+
+	}
+
+	private static void imprimirExercicio(Exercicio exercicio) {
+
+		System.out.println("\n\n");
+		System.out.println("Código: " + exercicio.getId());
+		System.out.println("Nome: " + exercicio.getNome());
+		System.out.println("Séries: " + exercicio.getSeries());
+		System.out.println("Tipo exercício: " + exercicio.getTipoExercicio().toString());
 
 	}
 

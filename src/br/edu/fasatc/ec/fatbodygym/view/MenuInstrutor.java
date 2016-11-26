@@ -14,17 +14,17 @@ public class MenuInstrutor extends AbstractBaseMenu {
 		do {
 			System.out.println("\n=================================== MENU ===================================");
 
-			System.out.println("1. Cadastrar exercício");
-			System.out.println("2. Editar exercício");
-			System.out.println("3. Consultar exercício (pesquisa textual)");
-			System.out.println("4. Consultar exercício (pesquisa código)");
-			System.out.println("5. Listar exercícios");
+			System.out.println("1. Cadastrar aluno");
+			System.out.println("2. Editar aluno");
+			System.out.println("3. Consultar aluno (CPF, nome ou RG)");
+			System.out.println("4. Consultar aluno (pesquisa código)");
+			System.out.println("5. Listar alunos");
 
-			System.out.println("5. Cadastrar aluno");
-			System.out.println("6. Editar aluno");
-			System.out.println("7. Consultar aluno (CPF, nome ou RG)");
-			System.out.println("8. Consultar aluno (pesquisa código)");
-			System.out.println("9. Listar alunos");
+			System.out.println("6. Cadastrar exercício");
+			System.out.println("7. Editar exercício");
+			System.out.println("8. Consultar exercício (pesquisa textual)");
+			System.out.println("9. Consultar exercício (pesquisa código)");
+			System.out.println("10. Listar exercícios");
 
 			System.out.println("10. Cadastrar usuário");
 			System.out.println("11. Editar usuário");

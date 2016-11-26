@@ -17,6 +17,13 @@ public class Exercicio extends AbstractEntidadeEntity implements Serializable, S
 	private TipoExercicio tipoExercicio;
 	private Boolean ativo;
 
+	public Exercicio() {
+	}
+
+	public Exercicio(Long id) {
+		this.id = id;
+	}
+
 	@Override
 	public Long getId() {
 		return id;

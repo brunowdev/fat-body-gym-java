@@ -25,4 +25,29 @@ public enum TipoExercicio implements EnumDescription, EnumInteger, Serializable 
 		return description;
 	}
 
+	public static TipoExercicio fromInteger(Integer integer) {
+
+		switch (integer) {
+		case 1:
+			return ZUMBA;
+		case 2:
+			return SPINNING;
+		case 3:
+			return CROSSFIT;
+		case 4:
+			return KETTLEBELLS;
+		case 5:
+			return BOOTCAMP;
+		case 6:
+			return YOGA;
+		case 7:
+			return MUAY_THAY;
+		case 8:
+			return HIPERTROFIA_MUSCULAR;
+
+		default:
+			return null;
+		}
+	}
+
 }
