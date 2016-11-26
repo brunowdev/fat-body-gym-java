@@ -31,17 +31,26 @@ public class MenuApp {
 	}
 
 	public static void exibir() {
-
-		retornaMenu(usuarioLogado);
+		final AbstractBaseMenu menu = retornaMenu(usuarioLogado);
+		invokeMenu(menu);
 		sair();
-
 	}
 
 	private static AbstractBaseMenu retornaMenu(Usuario usuario) {
-		return (usuario.getAluno() == null && usuario.getInstrutor() == null) ? new MenuAluno(scanner) : new MenuAluno(scanner);
+		return (usuario.getAluno() == null && usuario.getInstrutor() == null) ? new MenuAluno(scanner) : new MenuInstrutor(scanner);
 	}
 
-	private void escolherOpcaoMenuAluno(AbstractBaseMenu menu) {
+	private static void invokeMenu(AbstractBaseMenu menu) {
+
+		if (menu instanceof MenuAluno) {
+			escolherOpcaoMenuAluno(menu);
+		} else {
+			escolherOpcaoMenuInstrutor(menu);
+		}
+
+	}
+
+	private static void escolherOpcaoMenuAluno(AbstractBaseMenu menu) {
 
 		int opcao = menu.selecionarOpcao();
 
@@ -58,7 +67,7 @@ public class MenuApp {
 
 	}
 
-	private void escolherOpcaoMenuInstrutor(AbstractBaseMenu menu) {
+	private static void escolherOpcaoMenuInstrutor(AbstractBaseMenu menu) {
 
 		int opcao = menu.selecionarOpcao();
 
@@ -77,6 +86,7 @@ public class MenuApp {
 
 	private static void sair() {
 		System.out.println("Fechando");
+		fecharRecursosEstaticos();
 		System.exit(0);
 	}
 
