@@ -26,21 +26,21 @@ public class MenuInstrutor extends AbstractBaseMenu {
 			System.out.println("9. Consultar exercício (pesquisa código)");
 			System.out.println("10. Listar exercícios");
 
-			System.out.println("10. Cadastrar usuário");
-			System.out.println("11. Editar usuário");
-			System.out.println("12. Consultar usuário (e-mail)");
-			System.out.println("13. Consultar usuário (pesquisa código)");
-			System.out.println("14. Listar usuários");
+			System.out.println("11. Cadastrar usuário");
+			System.out.println("12. Editar usuário");
+			System.out.println("13. Consultar usuário (e-mail)");
+			System.out.println("14. Consultar usuário (pesquisa código)");
+			System.out.println("15. Listar usuários");
 
-			System.out.println("15. Cadastrar instrutor");
-			System.out.println("16. Editar instrutor");
-			System.out.println("17. Consultar instrutor (CPF, nome ou RG)");
-			System.out.println("18. Consultar instrutor (pesquisa código)");
-			System.out.println("19. Listar instrutores");
+			System.out.println("16. Cadastrar instrutor");
+			System.out.println("17. Editar instrutor");
+			System.out.println("18. Consultar instrutor (CPF, nome ou RG)");
+			System.out.println("19. Consultar instrutor (pesquisa código)");
+			System.out.println("20. Listar instrutores");
 			System.out.println("\n=================================== RELATÓRIOS ===================================");
-			System.out.println("20. Treinos mais praticados (dos mais praticados para os menos praticados)");
-			System.out.println("21. Alunos mais ativos (dos mais ativos para os menos ativos)");
-			System.out.println("22. Alunos ordenados por nome");
+			System.out.println("21. Treinos mais praticados (dos mais praticados para os menos praticados)");
+			System.out.println("22. Alunos mais ativos (dos mais ativos para os menos ativos)");
+			System.out.println("23. Alunos ordenados por nome");
 
 			System.out.println("0. Sair");
 			System.out.print("Informe a opcao desejada: > ");
@@ -60,7 +60,7 @@ public class MenuInstrutor extends AbstractBaseMenu {
 
 	@Override
 	public int getOpcaoMaxima() {
-		return 22;
+		return 23;
 	}
 
 }

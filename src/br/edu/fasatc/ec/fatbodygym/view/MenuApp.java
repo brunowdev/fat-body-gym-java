@@ -11,10 +11,12 @@ import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.Aluno;
 import br.edu.fasatc.ec.fatbodygym.model.Exercicio;
+import br.edu.fasatc.ec.fatbodygym.model.Instrutor;
 import br.edu.fasatc.ec.fatbodygym.model.TipoExercicio;
 import br.edu.fasatc.ec.fatbodygym.model.Usuario;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.AlunoRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.ExercicioRepository;
+import br.edu.fasatc.ec.fatbodygym.persistence.repository.InstrutorRepository;
 import br.edu.fasatc.ec.fatbodygym.view.login.LoginGUI;
 
 public class MenuApp {
@@ -91,6 +93,7 @@ public class MenuApp {
 
 		final AlunoRepository alunoRepository = new AlunoRepository();
 		final ExercicioRepository exercicioRepository = new ExercicioRepository();
+		final InstrutorRepository instrutorRepository = new InstrutorRepository();
 
 		while (opcao != 0) {
 
@@ -112,6 +115,7 @@ public class MenuApp {
 			case 5:
 				listarAlunos(menu);
 				break;
+
 			case 6:
 				exercicioRepository.merge(lerExercicio(menu, null));
 				break;
@@ -127,6 +131,23 @@ public class MenuApp {
 				break;
 			case 10:
 				listarExercicios(menu);
+				break;
+
+			case 16:
+				instrutorRepository.merge(lerInstrutor(menu, null));
+				break;
+			case 17:
+				final Instrutor instrutor = localizarInstrutorParaEditar(menu);
+				instrutorRepository.merge(lerInstrutor(menu, instrutor));
+				break;
+			case 18:
+				localizarInstrutorPorTexto(menu);
+				break;
+			case 19:
+				localizarInstrutorPorCodigo(menu);
+				break;
+			case 20:
+				listarInstrutores(menu);
 				break;
 
 			case 0:
@@ -354,6 +375,149 @@ public class MenuApp {
 		System.out.println("Nome: " + exercicio.getNome());
 		System.out.println("Séries: " + exercicio.getSeries());
 		System.out.println("Tipo exercício: " + exercicio.getTipoExercicio().toString());
+
+	}
+
+	/******
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
+
+	/**
+	 * Método que cadastra um novo instrutor ou altera um já existente.
+	 *
+	 * @param menu
+	 * @param instrutor
+	 * @return
+	 */
+	private static Instrutor lerInstrutor(AbstractBaseMenu menu, Instrutor instrutor) {
+
+		final Instrutor instrutorParaSalvar = instrutor == null ? new Instrutor() : instrutor;
+
+		System.out.println((instrutor == null ? ("Cadastrando") : ("Alterando")) + " instrutor");
+		System.out.println("Nome: \n > ");
+		instrutorParaSalvar.setNome(menu.lerTexto());
+		System.out.println("CPF: \n > ");
+		instrutorParaSalvar.setCpf(menu.lerTexto());
+		System.out.println("RG: \n > ");
+		instrutorParaSalvar.setRg(menu.lerTexto());
+		System.out.println("Data nascimento: (dd/mm/aaaa)\n > ");
+		instrutorParaSalvar.setDataNascimento(menu.lerData(true));
+		System.out.println("Instrutor " + (instrutor == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
+
+		return instrutorParaSalvar;
+	}
+
+	private static Instrutor localizarInstrutorParaEditar(AbstractBaseMenu menu) {
+		final InstrutorRepository instrutorRepository = new InstrutorRepository();
+		Instrutor instrutor = null;
+
+		while (instrutor == null) {
+
+			try {
+				System.out.println("Informe o código para alterar: ");
+				instrutor = instrutorRepository.findById(new Instrutor(menu.lerLong()));
+			} catch (final Exception e) {
+			}
+
+			if (instrutor == null) {
+				System.out.println("Instrutor não encontrado!");
+			}
+		}
+
+		return instrutor;
+	}
+
+	private static void localizarInstrutorPorTexto(AbstractBaseMenu menu) {
+		final InstrutorRepository instrutorRepository = new InstrutorRepository();
+		Instrutor instrutor = null;
+
+		while (instrutor == null) {
+
+			try {
+				System.out.println("Informe o CPF, nome ou RG para buscar: ");
+				final String texto = menu.lerTexto();
+				instrutor = instrutorRepository.findByStringFields(texto);
+				imprimirInstrutor(instrutor);
+			} catch (final Exception e) {
+			}
+
+			if (instrutor == null) {
+				System.out.println("Instrutor não encontrado!");
+			}
+		}
+
+	}
+
+	private static void localizarInstrutorPorCodigo(AbstractBaseMenu menu) {
+		final InstrutorRepository instrutorRepository = new InstrutorRepository();
+		Instrutor instrutor = null;
+
+		while (instrutor == null) {
+
+			try {
+				System.out.println("Informe o código para buscar: ");
+				final Long id = menu.lerLong();
+				instrutor = instrutorRepository.findById(new Instrutor(id));
+				imprimirInstrutor(instrutor);
+			} catch (final Exception e) {
+			}
+
+			if (instrutor == null) {
+				System.out.println("Instrutor não encontrado!");
+			}
+		}
+
+	}
+
+	private static void listarInstrutores(AbstractBaseMenu menu) throws ReadFileException, WriteFileException {
+		final InstrutorRepository instrutorRepository = new InstrutorRepository();
+
+		System.out.println("Listando instrutores: ");
+		List<Instrutor> instrutores = new ArrayList<>();
+		instrutores = instrutorRepository.findAll();
+		instrutores.stream().forEach(instrutor -> imprimirInstrutor(instrutor));
+
+	}
+
+	private static void imprimirInstrutor(Instrutor instrutor) {
+
+		System.out.println("\n\n");
+		System.out.println("Código: " + instrutor.getId());
+		System.out.println("Nome: " + instrutor.getNome());
+		System.out.println("CPF: " + instrutor.getCpf());
+		System.out.println("RG: " + instrutor.getRg());
+		System.out.println("Data nascimento: " + instrutor.getDataNascimento());
 
 	}
 
