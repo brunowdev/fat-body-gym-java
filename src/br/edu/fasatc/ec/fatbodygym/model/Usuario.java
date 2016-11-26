@@ -16,6 +16,10 @@ public class Usuario extends AbstractEntidadeEntity implements SearchableString 
 	public Usuario() {
 	}
 
+	public Usuario(Long id) {
+		this.id = id;
+	}
+
 	public Usuario(String email, String senha) {
 		this.email = email;
 		this.senha = senha;

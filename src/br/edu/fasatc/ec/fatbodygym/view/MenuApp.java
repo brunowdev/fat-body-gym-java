@@ -17,6 +17,7 @@ import br.edu.fasatc.ec.fatbodygym.model.Usuario;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.AlunoRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.ExercicioRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.InstrutorRepository;
+import br.edu.fasatc.ec.fatbodygym.persistence.repository.UsuarioRepository;
 import br.edu.fasatc.ec.fatbodygym.view.login.LoginGUI;
 
 public class MenuApp {
@@ -94,6 +95,7 @@ public class MenuApp {
 		final AlunoRepository alunoRepository = new AlunoRepository();
 		final ExercicioRepository exercicioRepository = new ExercicioRepository();
 		final InstrutorRepository instrutorRepository = new InstrutorRepository();
+		final UsuarioRepository usuarioRepository = new UsuarioRepository();
 
 		while (opcao != 0) {
 
@@ -115,7 +117,6 @@ public class MenuApp {
 			case 5:
 				listarAlunos(menu);
 				break;
-
 			case 6:
 				exercicioRepository.merge(lerExercicio(menu, null));
 				break;
@@ -132,7 +133,22 @@ public class MenuApp {
 			case 10:
 				listarExercicios(menu);
 				break;
-
+			case 11:
+				usuarioRepository.merge(lerUsuario(menu, null));
+				break;
+			case 12:
+				final Usuario usuario = localizarUsuarioParaEditar(menu);
+				usuarioRepository.merge(lerUsuario(menu, usuario));
+				break;
+			case 13:
+				localizarUsuarioPorEmail(menu);
+				break;
+			case 14:
+				localizarUsuarioPorCodigo(menu);
+				break;
+			case 15:
+				listarUsuarios(menu);
+				break;
 			case 16:
 				instrutorRepository.merge(lerInstrutor(menu, null));
 				break;
@@ -378,41 +394,6 @@ public class MenuApp {
 
 	}
 
-	/******
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 */
-
 	/**
 	 * Método que cadastra um novo instrutor ou altera um já existente.
 	 *
@@ -518,6 +499,106 @@ public class MenuApp {
 		System.out.println("CPF: " + instrutor.getCpf());
 		System.out.println("RG: " + instrutor.getRg());
 		System.out.println("Data nascimento: " + instrutor.getDataNascimento());
+
+	}
+
+	/**
+	 * Método que cadastra um novo usuário ou altera um já existente.
+	 *
+	 * @param menu
+	 * @param usuario
+	 * @return
+	 */
+	private static Usuario lerUsuario(AbstractBaseMenu menu, Usuario usuario) {
+
+		final Usuario usuarioParaSalvar = usuario == null ? new Usuario() : usuario;
+
+		System.out.println((usuario == null ? ("Cadastrando") : ("Alterando")) + " instrutor");
+		System.out.println("Nome: \n > ");
+		usuarioParaSalvar.setEmail(menu.lerTexto());
+		System.out.println("CPF: \n > ");
+		usuarioParaSalvar.setSenha(menu.lerTexto());
+		System.out.println("Usuário " + (usuario == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
+
+		return usuarioParaSalvar;
+	}
+
+	private static Usuario localizarUsuarioParaEditar(AbstractBaseMenu menu) {
+		final UsuarioRepository usuarioRepository = new UsuarioRepository();
+		Usuario usuario = null;
+
+		while (usuario == null) {
+
+			try {
+				System.out.println("Informe o código para alterar: ");
+				usuario = usuarioRepository.findById(new Usuario(menu.lerLong()));
+			} catch (final Exception e) {
+			}
+
+			if (usuario == null) {
+				System.out.println("Usuário não encontrado!");
+			}
+		}
+
+		return usuario;
+	}
+
+	private static void localizarUsuarioPorEmail(AbstractBaseMenu menu) {
+		final UsuarioRepository usuarioRepository = new UsuarioRepository();
+		Usuario usuario = null;
+
+		while (usuario == null) {
+
+			try {
+				System.out.println("Informe o e-mail para buscar: ");
+				final String texto = menu.lerTexto();
+				usuario = usuarioRepository.findByStringFields(texto);
+				imprimirUsuario(usuario);
+			} catch (final Exception e) {
+			}
+
+			if (usuario == null) {
+				System.out.println("Usuário não encontrado!");
+			}
+		}
+
+	}
+
+	private static void localizarUsuarioPorCodigo(AbstractBaseMenu menu) {
+		final UsuarioRepository usuarioRepository = new UsuarioRepository();
+		Usuario usuario = null;
+
+		while (usuario == null) {
+
+			try {
+				System.out.println("Informe o código para buscar: ");
+				final Long id = menu.lerLong();
+				usuario = usuarioRepository.findById(new Usuario(id));
+				imprimirUsuario(usuario);
+			} catch (final Exception e) {
+			}
+
+			if (usuario == null) {
+				System.out.println("Usuário não encontrado!");
+			}
+		}
+
+	}
+
+	private static void listarUsuarios(AbstractBaseMenu menu) throws ReadFileException, WriteFileException {
+		final UsuarioRepository usuarioRepository = new UsuarioRepository();
+
+		System.out.println("Listando usuários: ");
+		List<Usuario> usuarios = new ArrayList<>();
+		usuarios = usuarioRepository.findAll();
+		usuarios.stream().forEach(usuario -> imprimirUsuario(usuario));
+	}
+
+	private static void imprimirUsuario(Usuario usuario) {
+
+		System.out.println("\n\n");
+		System.out.println("Código: " + usuario.getId());
+		System.out.println("E-mail: " + usuario.getEmail());
 
 	}
 
