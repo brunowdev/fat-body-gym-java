@@ -19,213 +19,218 @@ import br.edu.fasatc.ec.fatbodygym.model.SearchableString;
 
 public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & SearchableString> {
 
-    private final String tabela;
+	private final String tabela;
 
-    /**
-     * Construtor para capturar os dados de uma tabela.
-     *
-     * @param urlTable
-     */
-    public ReadWriteLocalFile(String urlTable) {
+	/**
+	 * Construtor para capturar os dados de uma tabela.
+	 *
+	 * @param urlTable
+	 */
+	public ReadWriteLocalFile(String urlTable) {
 
-        Objects.requireNonNull(urlTable);
+		Objects.requireNonNull(urlTable);
 
-        this.tabela = urlTable;
-    }
+		this.tabela = urlTable;
+	}
 
-    /**
-     * Carrega as entidades já persistidas
-     *
-     * @return
-     * @throws ReadFileException
-     */
-    private List<T> readPersistedEntities() throws ReadFileException {
+	/**
+	 * Carrega as entidades já persistidas
+	 *
+	 * @return
+	 * @throws ReadFileException
+	 */
+	private List<T> readPersistedEntities() throws ReadFileException {
 
-        final List<T> entities = new ArrayList<>();
+		final List<T> entities = new ArrayList<>();
 
-        try (FileInputStream fileInputStream = new FileInputStream(tabela); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);) {
-            try {
+		try (FileInputStream fileInputStream = new FileInputStream(tabela); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);) {
+			try {
 
-                while (true) {
-                    entities.add((T) objectInputStream.readObject());
-                }
+				while (true) {
+					entities.add((T) objectInputStream.readObject());
+				}
 
-            } catch (final EOFException e) {
-            }
+			} catch (final EOFException e) {
+			}
 
-        } catch (final FileNotFoundException fnf) {
-        } catch (final Exception e) {
-            throw new ReadFileException(null, e);
-        }
+		} catch (final FileNotFoundException fnf) {
+		} catch (final Exception e) {
+			throw new ReadFileException(null, e);
+		}
 
-        return entities;
+		return entities;
 
-    }
+	}
 
-    /**
-     * Persiste uma nova entidade ou atualiza uma já existente
-     *
-     * @param entity
-     * @return
-     * @throws WriteFileException
-     * @throws ReadFileException
-     */
-    public T merge(T entity) throws WriteFileException, ReadFileException {
+	/**
+	 * Persiste uma nova entidade ou atualiza uma já existente
+	 *
+	 * @param entity
+	 * @return
+	 * @throws WriteFileException
+	 * @throws ReadFileException
+	 */
+	public T merge(T entity) throws WriteFileException, ReadFileException {
 
-        final List<T> persisted = readPersistedEntities();
+		final List<T> persisted = readPersistedEntities();
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(tabela); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(tabela); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
 
-            if (entity.getId() != null) {
-                final int index = persisted.indexOf(entity);
-                persisted.set(index, entity);
-            } else {
-                setId(entity, persisted);
-                persisted.add(entity);
-            }
+			if (entity.getId() != null) {
+				final int index = persisted.indexOf(entity);
+				persisted.set(index, entity);
+			} else {
+				setId(entity, persisted);
+				persisted.add(entity);
+			}
 
-            for (final T entityToPersist : persisted) {
-                objectOutputStream.writeObject(entityToPersist);
-            }
+			for (final T entityToPersist : persisted) {
+				objectOutputStream.writeObject(entityToPersist);
+			}
 
-        } catch (final Exception e) {
-            throw new WriteFileException(entity.getClass(), e);
-        }
+		} catch (final Exception e) {
+			throw new WriteFileException(entity.getClass(), e);
+		}
 
-        return entity;
-    }
+		return entity;
+	}
 
-    /**
-     * Remove um registro de uma tabela.
-     *
-     * @param entity
-     * @throws WriteFileException
-     * @throws ReadFileException
-     */
-    public void remove(T entity) throws WriteFileException, ReadFileException {
+	/**
+	 * Remove um registro de uma tabela.
+	 *
+	 * @param entity
+	 * @throws WriteFileException
+	 * @throws ReadFileException
+	 */
+	public void remove(T entity) throws WriteFileException, ReadFileException {
 
-        final Long idEntity = entity.getId();
+		final Long idEntity = entity.getId();
 
-        if (idEntity == null) {
-            throw new IllegalStateException("A entidade não está persistida, portanto não pode ser removida.");
-        }
+		if (idEntity == null) {
+			throw new IllegalStateException("A entidade não está persistida, portanto não pode ser removida.");
+		}
 
-        final List<T> persisted = readPersistedEntities();
+		final List<T> persisted = readPersistedEntities();
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(tabela); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(tabela); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
 
-            final int index = persisted.indexOf(entity);
-            persisted.remove(index);
+			final int index = persisted.indexOf(entity);
+			persisted.remove(index);
 
-            for (final T entityToPersist : persisted) {
-                objectOutputStream.writeObject(entityToPersist);
-            }
+			for (final T entityToPersist : persisted) {
+				objectOutputStream.writeObject(entityToPersist);
+			}
 
-        } catch (final Exception e) {
-            throw new WriteFileException(entity.getClass(), e);
-        }
+		} catch (final Exception e) {
+			throw new WriteFileException(entity.getClass(), e);
+		}
 
-    }
+	}
 
-    /**
-     * Retorna um registro de uma tabela.
-     *
-     * @param entity
-     * @return
-     * @throws EntidadeNaoEncontradaException
-     * @throws ReadFileException
-     */
-    public T findOne(T entity) throws EntidadeNaoEncontradaException, ReadFileException {
+	/**
+	 * Retorna um registro de uma tabela.
+	 *
+	 * @param entity
+	 * @return
+	 * @throws EntidadeNaoEncontradaException
+	 * @throws ReadFileException
+	 */
+	public T findOne(T entity) throws EntidadeNaoEncontradaException, ReadFileException {
 
-        if (entity == null || entity.getId() == null) {
-            throw new IllegalStateException("O id para busca não pode ser vazio.");
-        }
+		if (entity == null || entity.getId() == null) {
+			throw new IllegalStateException("O id para busca não pode ser vazio.");
+		}
 
-        final List<T> persisted = readPersistedEntities();
+		final List<T> persisted = readPersistedEntities();
 
-        final int index = persisted.indexOf(entity);
+		final int index = persisted.indexOf(entity);
 
-        if (index == -1) {
-            throw new EntidadeNaoEncontradaException("Não foi encontrado registro com id \"" + entity.getId() + "\"");
-        }
+		if (index == -1) {
+			throw new EntidadeNaoEncontradaException("Não foi encontrado registro com id \"" + entity.getId() + "\"");
+		}
 
-        return persisted.get(persisted.indexOf(entity));
-    }
+		return persisted.get(persisted.indexOf(entity));
+	}
 
-    /**
-     * Busca uma entidade pelos campos de String
-     *
-     * @param query
-     * @return
-     * @throws ReadFileException
-     */
-    public T findByStringFields(String query) throws ReadFileException {
+	/**
+	 * Busca uma entidade pelos campos de String
+	 *
+	 * @param query
+	 * @return
+	 * @throws ReadFileException
+	 * @throws EntidadeNaoEncontradaException
+	 */
+	public T findByStringFields(String query) throws ReadFileException, EntidadeNaoEncontradaException {
 
-        if (query == null) {
-            throw new IllegalStateException("A query para busca não pode ser vazia.");
-        }
+		if (query == null) {
+			throw new IllegalStateException("A query para busca não pode ser vazia.");
+		}
 
-        final List<T> persisted = readPersistedEntities();
+		final List<T> persisted = readPersistedEntities();
 
-        T entityMatch = null;
+		T entityMatch = null;
 
-        for (final T t : persisted) {
+		for (final T t : persisted) {
 
-            if (t.strictMatch(query) || t.containsMatch(query)) {
-                entityMatch = t;
-                break;
-            }
+			if (t.strictMatch(query) || t.containsMatch(query)) {
+				entityMatch = t;
+				break;
+			}
 
-        }
+		}
 
-        return entityMatch;
-    }
+		if (entityMatch == null) {
+			throw new EntidadeNaoEncontradaException("O registro procurado não foi localizado.");
+		}
 
-    /**
-     * Retorna todos os registros de uma tabela.
-     *
-     * @return
-     * @throws WriteFileException
-     * @throws ReadFileException
-     */
-    public List<T> findAll() throws WriteFileException, ReadFileException {
-        return readPersistedEntities();
-    }
+		return entityMatch;
+	}
 
-    /**
-     * Retorna a próxima sequência de id para uma entidade
-     *
-     * @param entities
-     * @return
-     */
-    public Long getSequence(List<T> entities) {
+	/**
+	 * Retorna todos os registros de uma tabela.
+	 *
+	 * @return
+	 * @throws WriteFileException
+	 * @throws ReadFileException
+	 */
+	public List<T> findAll() throws WriteFileException, ReadFileException {
+		return readPersistedEntities();
+	}
 
-        T entidadeLocalizada = null;
+	/**
+	 * Retorna a próxima sequência de id para uma entidade
+	 *
+	 * @param entities
+	 * @return
+	 */
+	public Long getSequence(List<T> entities) {
 
-        if (entities == null || entities.isEmpty()) {
-            return 1L;
-        }
+		T entidadeLocalizada = null;
 
-        entidadeLocalizada = entities.get(entities.size() - 1);
+		if (entities == null || entities.isEmpty()) {
+			return 1L;
+		}
 
-        return entidadeLocalizada == null ? 1L : (entidadeLocalizada.getId() + 1);
+		entidadeLocalizada = entities.get(entities.size() - 1);
 
-    }
+		return entidadeLocalizada == null ? 1L : (entidadeLocalizada.getId() + 1);
 
-    /**
-     * Método que define a sequência no objeto que será persistido
-     *
-     * @param entity
-     * @param entities
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws NoSuchFieldException
-     * @throws SecurityException
-     */
-    public void setId(T entity, List<T> entities) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        final Field field = entity.getClass().getDeclaredField("id");
-        field.setAccessible(true);
-        field.set(entity, getSequence(entities));
-    }
+	}
+
+	/**
+	 * Método que define a sequência no objeto que será persistido
+	 *
+	 * @param entity
+	 * @param entities
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 */
+	public void setId(T entity, List<T> entities) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+		final Field field = entity.getClass().getDeclaredField("id");
+		field.setAccessible(true);
+		field.set(entity, getSequence(entities));
+	}
 
 }

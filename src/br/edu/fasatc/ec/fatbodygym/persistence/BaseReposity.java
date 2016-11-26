@@ -28,7 +28,7 @@ public abstract class BaseReposity<T extends AbstractEntidadeEntity & Searchable
 		return readWriteLocalFile().findOne(entity);
 	}
 
-	public T findByStringFields(String query) throws ReadFileException {
+	public T findByStringFields(String query) throws ReadFileException, EntidadeNaoEncontradaException {
 		return readWriteLocalFile().findByStringFields(query);
 	}
 
