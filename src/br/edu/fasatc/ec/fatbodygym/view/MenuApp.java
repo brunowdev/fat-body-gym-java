@@ -160,6 +160,7 @@ public class MenuApp {
 				System.out.println("Treino não encontrado!");
 			} else {
 				treinoRepository.remove(treino);
+				System.out.println("Treino removido com sucesso!");
 			}
 
 		}
@@ -236,11 +237,11 @@ public class MenuApp {
 		System.out.println((treino == null ? ("Cadastrando") : ("Alterando")) + " treino");
 		System.out.println("Aluno: " + aluno.getNome());
 		treinoParaSalvar.setAluno(aluno);
-		System.out.println("Exercícios: \n > ");
+		System.out.println("Exercícios: > ");
 		treinoParaSalvar.setExercicios(lerExerciciosPraticados());
-		System.out.println("Data do treino: (dd/mm/aaaa)\n > ");
+		System.out.println("Data do treino: (dd/mm/aaaa) > ");
 		treinoParaSalvar.setData(menu.lerData(true));
-		System.out.println("Tipo: \n > ");
+		System.out.println("Tipo: > ");
 		treinoParaSalvar.setTipoTreino(TipoTreino.fromInteger(menu.lerInteiro()));
 		System.out.println("Treino " + (aluno == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
 
@@ -446,15 +447,15 @@ public class MenuApp {
 		final Aluno alunoParaSalvar = aluno == null ? new Aluno() : aluno;
 
 		System.out.println((aluno == null ? ("Cadastrando") : ("Alterando")) + " aluno");
-		System.out.println("Nome: \n > ");
+		System.out.println("Nome: > ");
 		alunoParaSalvar.setNome(menu.lerTexto());
-		System.out.println("CPF: \n > ");
+		System.out.println("CPF: > ");
 		alunoParaSalvar.setCpf(menu.lerTexto());
-		System.out.println("RG: \n > ");
+		System.out.println("RG: > ");
 		alunoParaSalvar.setRg(menu.lerTexto());
-		System.out.println("Data nascimento: (dd/mm/aaaa)\n > ");
+		System.out.println("Data nascimento: (dd/mm/aaaa) > ");
 		alunoParaSalvar.setDataNascimento(menu.lerData(true));
-		System.out.println("Peso: (kg)\n > ");
+		System.out.println("Peso: (kg) > ");
 		alunoParaSalvar.setPeso(menu.lerBigdecimal());
 		System.out.println("Aluno " + (aluno == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
 
@@ -541,6 +542,7 @@ public class MenuApp {
 				System.out.println("Aluno não encontrado!");
 			} else {
 				alunoRepository.remove(aluno);
+				System.out.println("Aluno removido com sucesso!");
 			}
 		}
 
@@ -580,13 +582,13 @@ public class MenuApp {
 		final Exercicio exercicioParaSalvar = exercicio == null ? new Exercicio() : exercicio;
 
 		System.out.println(exercicio == null ? ("Cadastrando") : ("Alterando") + " exercício");
-		System.out.println("Nome: \n > ");
+		System.out.println("Nome: > ");
 		exercicioParaSalvar.setNome(menu.lerTexto());
-		System.out.println("Séries: \n > ");
+		System.out.println("Séries: > ");
 		exercicioParaSalvar.setSeries(menu.lerInteiro());
-		System.out.println("Quantidade série: \n > ");
+		System.out.println("Quantidade série: > ");
 		exercicioParaSalvar.setQuantidadeSerie(menu.lerInteiro());
-		System.out.println("Tipo: \n > ");
+		System.out.println("Tipo: > ");
 		exercicioParaSalvar.setTipoExercicio(TipoExercicio.fromInteger(menu.lerInteiro()));
 		System.out.println("Exercício " + exercicio == null ? ("cadastrado") : ("alterado") + " com sucesso!");
 
@@ -676,6 +678,7 @@ public class MenuApp {
 				System.out.println("Exercício não encontrado!");
 			} else {
 				exercicioRepository.remove(exercicio);
+				System.out.println("Exercício removido com sucesso!");
 			}
 		}
 
@@ -713,13 +716,13 @@ public class MenuApp {
 		final Instrutor instrutorParaSalvar = instrutor == null ? new Instrutor() : instrutor;
 
 		System.out.println((instrutor == null ? ("Cadastrando") : ("Alterando")) + " instrutor");
-		System.out.println("Nome: \n > ");
+		System.out.println("Nome: > ");
 		instrutorParaSalvar.setNome(menu.lerTexto());
-		System.out.println("CPF: \n > ");
+		System.out.println("CPF: > ");
 		instrutorParaSalvar.setCpf(menu.lerTexto());
-		System.out.println("RG: \n > ");
+		System.out.println("RG: > ");
 		instrutorParaSalvar.setRg(menu.lerTexto());
-		System.out.println("Data nascimento: (dd/mm/aaaa)\n > ");
+		System.out.println("Data nascimento: (dd/mm/aaaa) > ");
 		instrutorParaSalvar.setDataNascimento(menu.lerData(true));
 		System.out.println("Instrutor " + (instrutor == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
 
@@ -806,6 +809,7 @@ public class MenuApp {
 				System.out.println("Instrutor não encontrado!");
 			} else {
 				instrutorRepository.remove(instrutor);
+				System.out.println("Instrutor removido com sucesso!");
 			}
 		}
 
@@ -844,9 +848,9 @@ public class MenuApp {
 		final Usuario usuarioParaSalvar = usuario == null ? new Usuario() : usuario;
 
 		System.out.println((usuario == null ? ("Cadastrando") : ("Alterando")) + " usuário");
-		System.out.println("E-mail: \n > ");
+		System.out.println("E-mail: > ");
 		usuarioParaSalvar.setEmail(menu.lerTexto());
-		System.out.println("Senha: \n > ");
+		System.out.println("Senha: > ");
 		usuarioParaSalvar.setSenha(menu.lerTexto());
 		System.out.println("Usuário " + (usuario == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
 
@@ -933,6 +937,7 @@ public class MenuApp {
 				System.out.println("Usuário não encontrado!");
 			} else {
 				usuarioRepository.remove(usuario);
+				System.out.println("Usuário removido com sucesso!");
 			}
 		}
 
