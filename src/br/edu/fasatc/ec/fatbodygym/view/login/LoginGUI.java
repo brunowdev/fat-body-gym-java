@@ -6,7 +6,6 @@ import br.edu.fasatc.ec.fatbodygym.exceptions.EntidadeNaoEncontradaException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.model.Usuario;
 import br.edu.fasatc.ec.fatbodygym.view.MenuApp;
-import br.edu.fasatc.ec.fatbodygym.view.usuarios.UsuarioAddGUI;
 
 public class LoginGUI extends javax.swing.JDialog {
 

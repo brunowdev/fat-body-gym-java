@@ -1,4 +1,4 @@
-package br.edu.fasatc.ec.fatbodygym.view.usuarios;
+package br.edu.fasatc.ec.fatbodygym.view.login;
 
 import javax.swing.JOptionPane;
 
@@ -6,7 +6,6 @@ import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.Usuario;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.UsuarioRepository;
-import br.edu.fasatc.ec.fatbodygym.view.login.LoginController;
 
 public class UsuarioAddGUI extends javax.swing.JDialog {
 
