@@ -52,13 +52,13 @@ public class UsuarioAddGUI extends javax.swing.JDialog {
 		setResizable(false);
 
 		jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Criar conta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12)));
 
-		TF_PASSWORD.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		TF_PASSWORD.setFont(new java.awt.Font("Tahoma", 0, 14));
 
-		TF_USERNAME.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		TF_USERNAME.setFont(new java.awt.Font("Tahoma", 0, 14));
 
-		BT_SALVAR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		BT_SALVAR.setFont(new java.awt.Font("Tahoma", 0, 14));
 		BT_SALVAR.setText("Salvar");
 		BT_SALVAR.setToolTipText("Crie uma conta.");
 		BT_SALVAR.addActionListener(new java.awt.event.ActionListener() {
@@ -72,10 +72,10 @@ public class UsuarioAddGUI extends javax.swing.JDialog {
 			}
 		});
 
-		jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
 		jLabel1.setText("E-mail:");
 
-		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14));
 		jLabel2.setText("Senha:");
 
 		final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -108,9 +108,9 @@ public class UsuarioAddGUI extends javax.swing.JDialog {
 
 		pack();
 		setLocationRelativeTo(null);
-	}// </editor-fold>//GEN-END:initComponents
+	}
 
-	private void BT_SALVARActionPerformed(java.awt.event.ActionEvent evt) throws ReadFileException {// GEN-FIRST:event_BT_SALVARActionPerformed
+	private void BT_SALVARActionPerformed(java.awt.event.ActionEvent evt) throws ReadFileException {
 
 		final LoginController lc = new LoginController();
 
@@ -134,36 +134,11 @@ public class UsuarioAddGUI extends javax.swing.JDialog {
 		try {
 			usuario = uRepo.merge(usuario);
 			JOptionPane.showMessageDialog(null, "Usuário \"" + usuario.getEmail() + "\" cadastrado com sucesso.", "Sucesso ao salvar", JOptionPane.INFORMATION_MESSAGE);
-			// usuarioTableModel.addRow(usuario);
 			dispose();
 		} catch (WriteFileException | ReadFileException ex) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao salvar usuário.\n\nErro: " + ex.getMessage(), "Erro ao cadastrar usuário", JOptionPane.ERROR_MESSAGE);
 		}
 
-	}// GEN-LAST:event_BT_SALVARActionPerformed
-
-	public static void main(String args[]) {
-		try {
-			for (final javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(UsuarioAddGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-
-		java.awt.EventQueue.invokeLater(() -> {
-			final UsuarioAddGUI dialog = new UsuarioAddGUI(new javax.swing.JFrame(), true);
-			dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-				@Override
-				public void windowClosing(java.awt.event.WindowEvent e) {
-					System.exit(0);
-				}
-			});
-			dialog.setVisible(true);
-		});
 	}
 
 	private javax.swing.JButton BT_SALVAR;

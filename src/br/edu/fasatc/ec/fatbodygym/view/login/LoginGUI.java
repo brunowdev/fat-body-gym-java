@@ -30,13 +30,13 @@ public class LoginGUI extends javax.swing.JDialog {
 		setResizable(false);
 
 		jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Acesso ao sistema", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12)));
 
-		TF_PASSWORD.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		TF_PASSWORD.setFont(new java.awt.Font("Tahoma", 0, 14));
 
-		TF_USERNAME.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		TF_USERNAME.setFont(new java.awt.Font("Tahoma", 0, 14));
 
-		jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		jButton1.setFont(new java.awt.Font("Tahoma", 0, 14));
 		jButton1.setText("Entrar");
 		jButton1.setToolTipText("Acessa o sistema");
 		jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -46,7 +46,7 @@ public class LoginGUI extends javax.swing.JDialog {
 			}
 		});
 
-		jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		jButton2.setFont(new java.awt.Font("Tahoma", 0, 14));
 		jButton2.setText("Criar conta");
 		jButton2.setToolTipText("Crie uma conta.");
 		jButton2.addActionListener(new java.awt.event.ActionListener() {

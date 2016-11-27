@@ -331,60 +331,72 @@ public class MenuApp {
 				listarAlunos(menu);
 				break;
 			case 6:
-				exercicioRepository.merge(lerExercicio(menu, null));
+				localizarRemoverAlunoPorCodigo(menu);
 				break;
 			case 7:
+				exercicioRepository.merge(lerExercicio(menu, null));
+				break;
+			case 8:
 				final Exercicio exercicio = localizarExercicioParaEditar(menu);
 				exercicioRepository.merge(lerExercicio(menu, exercicio));
 				break;
-			case 8:
+			case 9:
 				localizarExercicioPorTexto(menu);
 				break;
-			case 9:
+			case 10:
 				localizarExercicioPorCodigo(menu);
 				break;
-			case 10:
+			case 11:
 				listarExercicios(menu);
 				break;
-			case 11:
+			case 12:
+				localizarRemoverExercicioPorCodigo(menu);
+				break;
+			case 13:
 				usuarioRepository.merge(lerUsuario(menu, null));
 				break;
-			case 12:
+			case 14:
 				final Usuario usuario = localizarUsuarioParaEditar(menu);
 				usuarioRepository.merge(lerUsuario(menu, usuario));
 				break;
-			case 13:
+			case 15:
 				localizarUsuarioPorEmail(menu);
 				break;
-			case 14:
+			case 16:
 				localizarUsuarioPorCodigo(menu);
 				break;
-			case 15:
+			case 17:
 				listarUsuarios(menu);
 				break;
-			case 16:
+			case 18:
+				localizarRemoverUsuarioPorCodigo(menu);
+				break;
+			case 19:
 				instrutorRepository.merge(lerInstrutor(menu, null));
 				break;
-			case 17:
+			case 20:
 				final Instrutor instrutor = localizarInstrutorParaEditar(menu);
 				instrutorRepository.merge(lerInstrutor(menu, instrutor));
 				break;
-			case 18:
+			case 21:
 				localizarInstrutorPorTexto(menu);
 				break;
-			case 19:
+			case 22:
 				localizarInstrutorPorCodigo(menu);
 				break;
-			case 20:
+			case 23:
 				listarInstrutores(menu);
 				break;
-			case 21:
+			case 24:
+				localizarRemoverInstrutorPorCodigo(menu);
+				break;
+			case 25:
 				gerarRelatorio(menu, 1);
 				break;
-			case 22:
+			case 26:
 				gerarRelatorio(menu, 2);
 				break;
-			case 23:
+			case 27:
 				gerarRelatorio(menu, 3);
 				break;
 
@@ -511,6 +523,29 @@ public class MenuApp {
 
 	}
 
+	private static void localizarRemoverAlunoPorCodigo(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
+		final AlunoRepository alunoRepository = new AlunoRepository();
+		Aluno aluno = null;
+
+		while (aluno == null) {
+
+			try {
+				System.out.println("Informe o código para remover: ");
+				final Long id = menu.lerLong();
+				aluno = alunoRepository.findById(new Aluno(id));
+				imprimirAluno(aluno);
+			} catch (final Exception e) {
+			}
+
+			if (aluno == null) {
+				System.out.println("Aluno não encontrado!");
+			} else {
+				alunoRepository.remove(aluno);
+			}
+		}
+
+	}
+
 	private static void listarAlunos(AbstractBaseMenu menu) throws ReadFileException, WriteFileException {
 		final AlunoRepository alunoRepository = new AlunoRepository();
 
@@ -617,6 +652,30 @@ public class MenuApp {
 
 			if (exercicio == null) {
 				System.out.println("Exercício não encontrado!");
+			}
+		}
+
+	}
+
+	private static void localizarRemoverExercicioPorCodigo(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
+		final ExercicioRepository exercicioRepository = new ExercicioRepository();
+
+		Exercicio exercicio = null;
+
+		while (exercicio == null) {
+
+			try {
+				System.out.println("Informe o código para remover: ");
+				final Long id = menu.lerLong();
+				exercicio = exercicioRepository.findById(new Exercicio(id));
+				imprimirExercicio(exercicio);
+			} catch (final Exception e) {
+			}
+
+			if (exercicio == null) {
+				System.out.println("Exercício não encontrado!");
+			} else {
+				exercicioRepository.remove(exercicio);
 			}
 		}
 
@@ -729,6 +788,29 @@ public class MenuApp {
 
 	}
 
+	private static void localizarRemoverInstrutorPorCodigo(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
+		final InstrutorRepository instrutorRepository = new InstrutorRepository();
+		Instrutor instrutor = null;
+
+		while (instrutor == null) {
+
+			try {
+				System.out.println("Informe o código para remover: ");
+				final Long id = menu.lerLong();
+				instrutor = instrutorRepository.findById(new Instrutor(id));
+				imprimirInstrutor(instrutor);
+			} catch (final Exception e) {
+			}
+
+			if (instrutor == null) {
+				System.out.println("Instrutor não encontrado!");
+			} else {
+				instrutorRepository.remove(instrutor);
+			}
+		}
+
+	}
+
 	private static void listarInstrutores(AbstractBaseMenu menu) throws ReadFileException, WriteFileException {
 		final InstrutorRepository instrutorRepository = new InstrutorRepository();
 
@@ -828,6 +910,29 @@ public class MenuApp {
 
 			if (usuario == null) {
 				System.out.println("Usuário não encontrado!");
+			}
+		}
+
+	}
+
+	private static void localizarRemoverUsuarioPorCodigo(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
+		final UsuarioRepository usuarioRepository = new UsuarioRepository();
+		Usuario usuario = null;
+
+		while (usuario == null) {
+
+			try {
+				System.out.println("Informe o código para buscar: ");
+				final Long id = menu.lerLong();
+				usuario = usuarioRepository.findById(new Usuario(id));
+				imprimirUsuario(usuario);
+			} catch (final Exception e) {
+			}
+
+			if (usuario == null) {
+				System.out.println("Usuário não encontrado!");
+			} else {
+				usuarioRepository.remove(usuario);
 			}
 		}
 

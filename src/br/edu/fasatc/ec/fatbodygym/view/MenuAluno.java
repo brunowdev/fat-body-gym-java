@@ -37,7 +37,7 @@ public class MenuAluno extends AbstractBaseMenu {
 
 	@Override
 	public int getOpcaoMaxima() {
-		return 5;
+		return 6;
 	}
 
 }

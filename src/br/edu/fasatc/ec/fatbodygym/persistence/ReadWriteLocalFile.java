@@ -41,6 +41,7 @@ public class ReadWriteLocalFile<T extends AbstractEntidadeEntity & SearchableStr
 	 * @return
 	 * @throws ReadFileException
 	 */
+	@SuppressWarnings("unchecked")
 	private List<T> readPersistedEntities() throws ReadFileException {
 
 		final List<T> entities = new ArrayList<>();
