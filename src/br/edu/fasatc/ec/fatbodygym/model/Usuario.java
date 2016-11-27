@@ -1,10 +1,5 @@
 package br.edu.fasatc.ec.fatbodygym.model;
 
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-
 import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
 
@@ -25,18 +20,10 @@ public class Usuario extends AbstractEntidadeEntity implements SearchableString 
 		this.senha = senha;
 	}
 
-	@NotNull(message = "O id é requerido para persistir um objeto.")
 	private Long id;
-
-	@Length(max = 120, message = "O tamanho máximo do e-mail é de 120 caracteres.")
-	@Email(message = "Este e-mail não é válido.")
 	private String email;
-
-	@Length(min = 4, max = 20, message = "A senha deve possuir entre 4 e 20 caracteres.")
 	private String senha;
-
 	private Aluno aluno;
-
 	private Instrutor instrutor;
 
 	@Override
