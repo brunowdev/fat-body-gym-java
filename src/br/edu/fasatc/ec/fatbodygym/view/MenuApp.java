@@ -112,6 +112,9 @@ public class MenuApp {
 			case 5:
 				listarTreinos(menu);
 				break;
+			case 6:
+				localizarTreinoParaRemover(menu);
+				break;
 			case 0:
 				break;
 			}
@@ -136,6 +139,29 @@ public class MenuApp {
 			if (treino == null) {
 				System.out.println("Treino não encontrado!");
 			}
+		}
+
+		return treino;
+	}
+
+	private static Treino localizarTreinoParaRemover(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
+		final TreinoRepository treinoRepository = new TreinoRepository();
+
+		Treino treino = null;
+		while (treino == null) {
+
+			try {
+				System.out.println("Informe o código para remover: ");
+				treino = treinoRepository.findById(new Treino(menu.lerLong()));
+			} catch (final Exception e) {
+			}
+
+			if (treino == null) {
+				System.out.println("Treino não encontrado!");
+			} else {
+				treinoRepository.remove(treino);
+			}
+
 		}
 
 		return treino;
