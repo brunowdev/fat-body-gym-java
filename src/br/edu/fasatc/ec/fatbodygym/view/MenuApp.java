@@ -355,6 +355,12 @@ public class MenuApp {
 			case 21:
 				gerarRelatorio(menu, 1);
 				break;
+			case 22:
+				gerarRelatorio(menu, 2);
+				break;
+			case 23:
+				gerarRelatorio(menu, 3);
+				break;
 
 			case 0:
 				break;
@@ -376,11 +382,12 @@ public class MenuApp {
 			break;
 
 		case 2:
-
+			Relatorios.relatorioAlunosMaisAtivos(caminhoRelatorio, treinoRepository.findAll());
 			break;
 
 		case 3:
-
+			final AlunoRepository alunoRepository = new AlunoRepository();
+			Relatorios.relatorioAlunos(caminhoRelatorio, alunoRepository.findAll());
 			break;
 
 		default:
