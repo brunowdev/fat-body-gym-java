@@ -2,6 +2,12 @@ package br.edu.fasatc.ec.fatbodygym.view;
 
 import java.util.Scanner;
 
+/**
+ * Representa o menu que estará acessível quando um aluno efetuar login.
+ *
+ * @author BRUNO-PC
+ *
+ */
 public class MenuAluno extends AbstractBaseMenu {
 
 	public MenuAluno(Scanner scanner) {

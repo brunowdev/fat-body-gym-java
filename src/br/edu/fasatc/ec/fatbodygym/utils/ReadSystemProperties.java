@@ -6,7 +6,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
-
+/**
+ * Atualmente esta classe não é utilizada.
+ *
+ * @author BRUNO-PC
+ *
+ */
 public class ReadSystemProperties {
 
 	private final Properties properties;

@@ -2,6 +2,12 @@ package br.edu.fasatc.ec.fatbodygym.view;
 
 import java.util.Scanner;
 
+/**
+ * Representa o menu que será exibido ao cadastrar um novo usuário.
+ *
+ * @author BRUNO-PC
+ *
+ */
 public class MenuInstrutor extends AbstractBaseMenu {
 
 	public MenuInstrutor(Scanner scanner) {

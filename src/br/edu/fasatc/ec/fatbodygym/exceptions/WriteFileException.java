@@ -2,7 +2,7 @@ package br.edu.fasatc.ec.fatbodygym.exceptions;
 
 import br.edu.fasatc.ec.fatbodygym.model.AbstractEntidadeEntity;
 
-public class WriteFileException extends PersistenceException {
+public class WriteFileException extends PersistenciaException {
 
     private static final long serialVersionUID = -3712808954455220847L;
 
