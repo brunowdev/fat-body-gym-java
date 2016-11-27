@@ -24,7 +24,6 @@ public class Usuario extends AbstractEntidadeEntity implements SearchableString 
 	private String email;
 	private String senha;
 	private Aluno aluno;
-	private Instrutor instrutor;
 
 	@Override
 	public Long getId() {
@@ -43,16 +42,8 @@ public class Usuario extends AbstractEntidadeEntity implements SearchableString 
 		return aluno;
 	}
 
-	public Instrutor getInstrutor() {
-		return instrutor;
-	}
-
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
-	}
-
-	public void setInstrutor(Instrutor instrutor) {
-		this.instrutor = instrutor;
 	}
 
 	public void setId(Long id) {

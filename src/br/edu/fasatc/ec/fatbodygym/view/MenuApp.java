@@ -65,7 +65,7 @@ public class MenuApp {
 	}
 
 	private static AbstractBaseMenu retornaMenu(Usuario usuario) {
-		return (usuario.getAluno() == null && usuario.getInstrutor() == null) ? new MenuInstrutor(scanner) : new MenuAluno(scanner);
+		return (usuario.getAluno() == null) ? new MenuInstrutor(scanner) : new MenuAluno(scanner);
 	}
 
 	private static void invokeMenu(AbstractBaseMenu menu) throws WriteFileException, ReadFileException, FileNotFoundException {
