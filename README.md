@@ -8,5 +8,5 @@ Repositório do projeto final da disciplina de Programação Orientada à Objeto
 - [x] Criar mecanismo do CRUD com os arquivos
 - [x] Criar os repository's
 - [x] Implementar as buscas
-- [ ] Implementar os relatórios 
-- [ ] Criar os menus
+- [x] Implementar os relatórios 
+- [x] Criar os menus
