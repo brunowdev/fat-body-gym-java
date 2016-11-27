@@ -38,7 +38,7 @@ public class MenuInstrutor extends AbstractBaseMenu {
 			System.out.println("19. Consultar instrutor (pesquisa código)");
 			System.out.println("20. Listar instrutores");
 			System.out.println("\n=================================== RELATÓRIOS ===================================");
-			System.out.println("21. Treinos mais praticados (dos mais praticados para os menos praticados)");
+			System.out.println("21. Exercícios mais praticados (dos mais praticados para os menos praticados)");
 			System.out.println("22. Alunos mais ativos (dos mais ativos para os menos ativos)");
 			System.out.println("23. Alunos ordenados por nome");
 

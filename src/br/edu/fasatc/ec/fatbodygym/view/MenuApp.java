@@ -1,6 +1,7 @@
 package br.edu.fasatc.ec.fatbodygym.view;
 
 import java.awt.Frame;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +25,7 @@ import br.edu.fasatc.ec.fatbodygym.persistence.repository.ExercicioRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.InstrutorRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.TreinoRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.UsuarioRepository;
+import br.edu.fasatc.ec.fatbodygym.relatorios.Relatorios;
 import br.edu.fasatc.ec.fatbodygym.view.login.LoginGUI;
 
 public class MenuApp {
@@ -56,7 +58,7 @@ public class MenuApp {
 
 	}
 
-	public static void exibir() throws WriteFileException, ReadFileException {
+	public static void exibir() throws WriteFileException, ReadFileException, FileNotFoundException {
 		final AbstractBaseMenu menu = retornaMenu(usuarioLogado);
 		invokeMenu(menu);
 		sair();
@@ -66,7 +68,7 @@ public class MenuApp {
 		return (usuario.getAluno() == null && usuario.getInstrutor() == null) ? new MenuInstrutor(scanner) : new MenuAluno(scanner);
 	}
 
-	private static void invokeMenu(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
+	private static void invokeMenu(AbstractBaseMenu menu) throws WriteFileException, ReadFileException, FileNotFoundException {
 
 		if (menu instanceof MenuAluno) {
 			escolherOpcaoMenuAluno(menu);
@@ -270,7 +272,7 @@ public class MenuApp {
 
 	// Menu dos instrutores
 
-	private static void escolherOpcaoMenuInstrutor(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
+	private static void escolherOpcaoMenuInstrutor(AbstractBaseMenu menu) throws WriteFileException, ReadFileException, FileNotFoundException {
 
 		int opcao = menu.selecionarOpcao();
 
@@ -350,11 +352,39 @@ public class MenuApp {
 			case 20:
 				listarInstrutores(menu);
 				break;
+			case 21:
+				gerarRelatorio(menu, 1);
+				break;
 
 			case 0:
 				break;
 			}
 			opcao = menu.selecionarOpcao();
+		}
+
+	}
+
+	private static void gerarRelatorio(AbstractBaseMenu menu, int idRelatorio) throws FileNotFoundException, WriteFileException, ReadFileException {
+
+		final TreinoRepository treinoRepository = new TreinoRepository();
+		System.out.println("Informe o caminho para gerar o relatório: ");
+		final String caminhoRelatorio = menu.lerTexto();
+
+		switch (idRelatorio) {
+		case 1:
+			Relatorios.relatorioExercicioMaisPraticados(caminhoRelatorio, treinoRepository.findAll());
+			break;
+
+		case 2:
+
+			break;
+
+		case 3:
+
+			break;
+
+		default:
+			break;
 		}
 
 	}
