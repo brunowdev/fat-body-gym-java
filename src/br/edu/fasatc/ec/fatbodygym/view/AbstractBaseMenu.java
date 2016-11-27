@@ -30,19 +30,26 @@ public abstract class AbstractBaseMenu {
 	public abstract int selecionarOpcao();
 
 	public String lerTexto() {
-		return this.scanner.nextLine();
+		final String texto = this.scanner.nextLine();
+		return texto;
 	}
 
 	public Integer lerInteiro() {
-		return this.scanner.nextInt();
+		final Integer integer = this.scanner.nextInt();
+		scanner.nextLine();
+		return integer;
 	}
 
 	public Long lerLong() {
-		return this.scanner.nextLong();
+		final Long longg = this.scanner.nextLong();
+		scanner.nextLine();
+		return longg;
 	}
 
 	public BigDecimal lerBigdecimal() {
-		return this.scanner.nextBigDecimal();
+		final BigDecimal bigDecimal = this.scanner.nextBigDecimal();
+		scanner.nextLine();
+		return bigDecimal;
 	}
 
 	public Date lerData(boolean lerAteSerValido) {

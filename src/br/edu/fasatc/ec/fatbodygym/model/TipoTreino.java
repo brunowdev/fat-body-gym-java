@@ -25,4 +25,24 @@ public enum TipoTreino implements EnumDescription, EnumInteger, Serializable {
 		return description;
 	}
 
+	public static TipoTreino fromInteger(Integer integer) {
+
+		switch (integer) {
+		case 1:
+			return FUNCIONAL;
+		case 2:
+			return HIPERTROFIA;
+		case 3:
+			return FORCA_MUSCULAR;
+		case 4:
+			return POTENCIA_MUSCULAR;
+		case 5:
+			return RESISTENCIA_MUSCULAR;
+
+		default:
+			return null;
+		}
+
+	}
+
 }

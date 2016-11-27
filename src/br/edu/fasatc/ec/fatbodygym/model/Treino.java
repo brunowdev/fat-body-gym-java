@@ -1,9 +1,11 @@
 package br.edu.fasatc.ec.fatbodygym.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import br.edu.fasatc.ec.fatbodygym.constansts.ErpDatabaseConstants;
 import br.edu.fasatc.ec.fatbodygym.constansts.LocalFileAsTable;
@@ -18,6 +20,13 @@ public class Treino extends AbstractEntidadeEntity implements SearchableString {
 	private List<Exercicio> exercicios;
 	private Date data;
 	private TipoTreino tipoTreino;
+
+	public Treino() {
+	}
+
+	public Treino(Long id) {
+		this.id = id;
+	}
 
 	@Override
 	public Long getId() {
@@ -93,10 +102,17 @@ public class Treino extends AbstractEntidadeEntity implements SearchableString {
 	@Override
 	public String[] getSearchableFields() {
 
+		final List<String> contentFields = new ArrayList<>(12);
+
 		final String aluno = Optional.ofNullable(getAluno().getNome()).orElse(null).toString();
+		final List<String> exercicios = Optional.ofNullable(getExercicios()).orElse(null).stream().map(exercicio -> exercicio.getNome()).collect(Collectors.toList());
 		final String tipoTreino = Optional.ofNullable(getTipoTreino()).orElse(null).toString();
 
-		return new String[] { aluno, tipoTreino };
+		contentFields.add(aluno);
+		contentFields.addAll(exercicios);
+		contentFields.add(tipoTreino);
+
+		return (String[]) contentFields.toArray();
 	}
 
 }

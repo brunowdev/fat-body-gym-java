@@ -2,21 +2,27 @@ package br.edu.fasatc.ec.fatbodygym.view;
 
 import java.awt.Frame;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import br.edu.fasatc.ec.fatbodygym.exceptions.EntidadeNaoEncontradaException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.ReadFileException;
 import br.edu.fasatc.ec.fatbodygym.exceptions.WriteFileException;
 import br.edu.fasatc.ec.fatbodygym.model.Aluno;
 import br.edu.fasatc.ec.fatbodygym.model.Exercicio;
 import br.edu.fasatc.ec.fatbodygym.model.Instrutor;
 import br.edu.fasatc.ec.fatbodygym.model.TipoExercicio;
+import br.edu.fasatc.ec.fatbodygym.model.TipoTreino;
+import br.edu.fasatc.ec.fatbodygym.model.Treino;
 import br.edu.fasatc.ec.fatbodygym.model.Usuario;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.AlunoRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.ExercicioRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.InstrutorRepository;
+import br.edu.fasatc.ec.fatbodygym.persistence.repository.TreinoRepository;
 import br.edu.fasatc.ec.fatbodygym.persistence.repository.UsuarioRepository;
 import br.edu.fasatc.ec.fatbodygym.view.login.LoginGUI;
 
@@ -70,23 +76,199 @@ public class MenuApp {
 
 	}
 
-	private static void escolherOpcaoMenuAluno(AbstractBaseMenu menu) {
+	// Menu dos alunos
+
+	private static void escolherOpcaoMenuAluno(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
 
 		int opcao = menu.selecionarOpcao();
+
+		// Captura o aluno refernte ao usuário
+		final Aluno aluno = usuarioLogado.getAluno();
+
+		if (aluno == null) {
+			throw new IllegalStateException("O usuário atual não pode acessar os recursos como um aluno.");
+		}
+
+		final TreinoRepository treinoRepository = new TreinoRepository();
 
 		while (opcao != 0) {
 
 			switch (opcao) {
 			case 1:
-
+				treinoRepository.merge(lerTreino(menu, null));
+				break;
+			case 2:
+				final Treino treino = localizarTreinoParaEditar(menu);
+				treinoRepository.merge(lerTreino(menu, treino));
+				break;
+			case 3:
+				localizarTreinoPorTexto(menu);
+				break;
+			case 4:
+				localizarTreinoPorCodigo(menu);
+				break;
+			case 5:
+				listarTreinos(menu);
 				break;
 			case 0:
 				break;
 			}
+
 			opcao = menu.selecionarOpcao();
 		}
 
 	}
+
+	private static Treino localizarTreinoParaEditar(AbstractBaseMenu menu) {
+		final TreinoRepository treinoRepository = new TreinoRepository();
+
+		Treino treino = null;
+		while (treino == null) {
+
+			try {
+				System.out.println("Informe o código para alterar: ");
+				treino = treinoRepository.findById(new Treino(menu.lerLong()));
+			} catch (final Exception e) {
+			}
+
+			if (treino == null) {
+				System.out.println("Treino não encontrado!");
+			}
+		}
+
+		return treino;
+	}
+
+	private static void localizarTreinoPorTexto(AbstractBaseMenu menu) {
+		final TreinoRepository treinoRepository = new TreinoRepository();
+		Treino treino = null;
+
+		while (treino == null) {
+
+			try {
+				System.out.println("Informe o nome de algum exercício para buscar: ");
+				final String texto = menu.lerTexto();
+				treino = treinoRepository.findByStringFields(texto);
+				imprimirTreino(treino);
+			} catch (final Exception e) {
+			}
+
+			if (treino == null) {
+				System.out.println("Treino não encontrado!");
+			}
+		}
+
+	}
+
+	private static void localizarTreinoPorCodigo(AbstractBaseMenu menu) {
+		final TreinoRepository treinoRepository = new TreinoRepository();
+		Treino treino = null;
+
+		while (treino == null) {
+
+			try {
+				System.out.println("Informe o código para buscar: ");
+				final Long id = menu.lerLong();
+				treino = treinoRepository.findById(new Treino(id));
+				imprimirTreino(treino);
+			} catch (final Exception e) {
+			}
+
+			if (treino == null) {
+				System.out.println("Treino não encontrado!");
+			}
+		}
+
+	}
+
+	private static void imprimirTreino(Treino treino) {
+
+		System.out.println("\n\n");
+		System.out.println("Código: " + treino.getId());
+		System.out.println("Tipo: " + treino.getTipoTreino().toString());
+		System.out.println("Data: " + treino.getData());
+		System.out.println("Exercícios: ");
+		Optional.of(treino.getExercicios()).orElse(Collections.emptyList()).stream().forEach(exercicio -> System.out.println(exercicio.getNome()));
+
+	}
+
+	/**
+	 * Método que cadastra um novo treino ou altera um já existente.
+	 *
+	 * @param menu
+	 * @param aluno
+	 * @return
+	 * @throws ReadFileException
+	 */
+	private static Treino lerTreino(AbstractBaseMenu menu, Treino treino) throws ReadFileException {
+
+		final Treino treinoParaSalvar = treino == null ? new Treino() : treino;
+		final Aluno aluno = usuarioLogado.getAluno();
+
+		System.out.println((treino == null ? ("Cadastrando") : ("Alterando")) + " treino");
+		System.out.println("Aluno: " + aluno.getNome());
+		treinoParaSalvar.setAluno(aluno);
+		System.out.println("Exercícios: \n > ");
+		treinoParaSalvar.setExercicios(lerExerciciosPraticados());
+		System.out.println("Data do treino: (dd/mm/aaaa)\n > ");
+		treinoParaSalvar.setData(menu.lerData(true));
+		System.out.println("Tipo: \n > ");
+		treinoParaSalvar.setTipoTreino(TipoTreino.fromInteger(menu.lerInteiro()));
+		System.out.println("Treino " + (aluno == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
+
+		return treinoParaSalvar;
+	}
+
+	private static List<Exercicio> lerExerciciosPraticados() throws ReadFileException {
+
+		final ExercicioRepository exercicioRepository = new ExercicioRepository();
+		final List<Exercicio> exercicios = new ArrayList<>();
+		Long codigoExercicio = -1L;
+
+		while (codigoExercicio != 0) {
+
+			System.out.println("Informe os exercícios praticados: ");
+			System.out.println("(0 para sair) > ");
+			codigoExercicio = scanner.nextLong();
+			scanner.nextLine();
+
+			if (codigoExercicio == 0) {
+				break;
+			}
+
+			Exercicio exercicio = null;
+
+			try {
+				exercicio = exercicioRepository.findById(new Exercicio(codigoExercicio));
+			} catch (final EntidadeNaoEncontradaException e) {
+				System.out.println("Exercício não encontrado!");
+			}
+
+			if (exercicios.contains(exercicio)) {
+				System.out.println("Você já adicionou este exercício ao seu treino.");
+			} else {
+				exercicios.add(exercicio);
+				System.out.println("Exercício adicionado ao treino com sucesso.");
+			}
+
+		}
+
+		return exercicios;
+	}
+
+	private static void listarTreinos(AbstractBaseMenu menu) throws ReadFileException, WriteFileException {
+		final TreinoRepository treinoRepository = new TreinoRepository();
+
+		final Aluno aluno = usuarioLogado.getAluno();
+
+		System.out.println("Listando treinos: ");
+		List<Treino> treinos = new ArrayList<>();
+		treinos = treinoRepository.findAll();
+		treinos.stream().filter(treino -> treino.getAluno().equals(aluno)).forEach(treino -> imprimirTreino(treino));
+
+	}
+
+	// Menu dos instrutores
 
 	private static void escolherOpcaoMenuInstrutor(AbstractBaseMenu menu) throws WriteFileException, ReadFileException {
 
@@ -102,7 +284,10 @@ public class MenuApp {
 			switch (opcao) {
 
 			case 1:
-				alunoRepository.merge(lerAluno(menu, null));
+				final Aluno alunoCadastrado = alunoRepository.merge(lerAluno(menu, null));
+				final Usuario usuarioAluno = usuarioRepository.merge(lerUsuario(menu, null));
+				usuarioAluno.setAluno(alunoCadastrado);
+				usuarioRepository.merge(usuarioAluno);
 				break;
 			case 2:
 				final Aluno aluno = localizarAlunoParaEditar(menu);
@@ -513,10 +698,10 @@ public class MenuApp {
 
 		final Usuario usuarioParaSalvar = usuario == null ? new Usuario() : usuario;
 
-		System.out.println((usuario == null ? ("Cadastrando") : ("Alterando")) + " instrutor");
-		System.out.println("Nome: \n > ");
+		System.out.println((usuario == null ? ("Cadastrando") : ("Alterando")) + " usuário");
+		System.out.println("E-mail: \n > ");
 		usuarioParaSalvar.setEmail(menu.lerTexto());
-		System.out.println("CPF: \n > ");
+		System.out.println("Senha: \n > ");
 		usuarioParaSalvar.setSenha(menu.lerTexto());
 		System.out.println("Usuário " + (usuario == null ? ("cadastrado") : ("alterado")) + " com sucesso!");
 

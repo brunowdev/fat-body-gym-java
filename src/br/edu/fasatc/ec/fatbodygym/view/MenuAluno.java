@@ -17,7 +17,7 @@ public class MenuAluno extends AbstractBaseMenu {
 			System.out.println("2. Editar um treino");
 			System.out.println("3. Consultar treino (pesquisa textual por exercício)");
 			System.out.println("4. Consultar treino (pesquisa por código do exercício)");
-			System.out.println("5. Listar Treinos");
+			System.out.println("5. Listar meus Treinos");
 			System.out.println("0. Sair");
 			System.out.print("Informe a opcao desejada: > ");
 			opcao = scanner.nextInt();
